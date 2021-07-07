@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+    <title>Оформление заказа</title>
+
+    <link rel="icon" type="image/png" th:href="@{/static/favicon.ico}"/>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+    <script type="text/javascript" th:src="@{/js/main.js}"></script>
+
+    <!--<script src="https://www.paypalobjects.com/api/checkout.js" data-version-4></script>-->
+
+    <link type="text/css" rel="stylesheet" th:href="@{/css/main.css}"/>
+</head>
+
+<body>
+
+<div th:replace="~{navigation :: navi(Quizzes)}"/>
+
+<div class="container">
+    <h1>Quizing :)</h1>
+    <br/>
+    <form th:action="@{/admin/quiz/confirm}" th:object="${quiz}" method="post" class="form-horizontal">
+        <input type="text" name="quizName" th:placeholder="'Input Quiz Name'">
+        <table class="table table-hover">
+            <thead class="thead-dark">
+            <tr>
+                <th>Question</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="q : ${quiz.questionList}">
+                <td th:text="${q.question.getTitle()}"/>
+            </tr>
+            <tr>
+                <td>Total questions:</td>
+                <td/>
+                <td th:text="${quiz.questionList.size()}"/>
+            </tr>
+            </tbody>
+        </table>
+        <div th:if="${!quiz.confirmed}">
+            <button type="submit" class="btn btn-primary">Ready</button>
+        </div>
+        <div th:if="${quiz.confirmed}">
+                <a class="btn btn-primary" th:href="@{'/admin/quiz/result/' + ${quiz.id}}">Confirm</a>
+        </div>
+    </form>
+</div>
+</body>
+</html>

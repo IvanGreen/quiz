@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="utf-8"/>
+
+  <title>Quizzes</title>
+
+  <link rel="icon" type="image/png" th:href="@{/static/favicon.ico}"/>
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+
+  <meta name="ctx" th:content="${#httpServletRequest.getContextPath()}"/>
+</head>
+
+<body>
+
+<div th:replace="~{navigation :: navi(Quizzes)}"/>
+
+<div class="container">
+  <br>
+  <h1 th:text="Quzzes" />
+  <table class="table table-hover">
+    <thead class="thead-dark">
+    <tr>
+      <th>ID</th>
+      <th>Quiz Name</th>
+      <th sec:authorize="hasRole('ADMIN')">Quiz Status</th>
+      <th>Date</th>
+      <th>Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="q : ${quizzes}">
+      <td th:text="${q.id}"/>
+      <td th:text="${q.getQuizName()}"/>
+      <td sec:authorize="hasRole('ADMIN')">
+        <span sec:authorize="hasRole('ADMIN')" th:if="${q.getQuizStatus().getId() == 1}" th:text="${q.getQuizStatus().getTitle()}" class="badge badge-danger" />
+        <span sec:authorize="hasRole('ADMIN')" th:if="${q.getQuizStatus().getId() == 2}" th:text="${q.getQuizStatus().getTitle()}" class="badge badge-primary" />
+      </td>
+      <td th:text="${q.createAt}"/>
+      <td>
+        <a sec:authorize="hasRole('ADMIN')"  th:if="${q.getQuizStatus().getId() == 1}" th:href="@{'/admin/quiz/delete/' + ${q.id}}" >DELETE</a>
+        <a sec:authorize="hasRole('ADMIN')"  th:if="${q.getQuizStatus().getId() == 1}" th:href="@{'/admin/quiz/ready/' + ${q.id}}" >Sent Quiz</a>
+        <a sec:authorize="!hasRole('ADMIN')" th:href="@{'/quiz/start/' + ${q.id}}" >START</a>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+</body>
+</html>
