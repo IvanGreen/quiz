@@ -20,18 +20,11 @@ public class Outcome {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @ManyToMany(cascade = {CascadeType.ALL}, mappedBy = "question", fetch = FetchType.EAGER)
+    @ManyToMany(cascade = {CascadeType.ALL}, mappedBy = "quiz", fetch = FetchType.EAGER)
     private List<QuestionAnswer> questionAnswers;
 
     @ManyToOne
     @JoinColumn(name = "quiz_id")
     private Quiz quiz;
 
-    @ManyToMany
-    @JoinColumn(name = "questions_id")
-    private List<Question> questions;
-
-    @ManyToOne
-    @JoinColumn(name = "answer_id")
-    private Answer answer;
 }
