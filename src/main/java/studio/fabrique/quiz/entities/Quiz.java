@@ -38,4 +38,12 @@ public class Quiz {
     @JsonIgnore
     @Transient
     private boolean confirmed;
+
+    @Override
+    public String toString() {
+        return "Quiz{" +
+                "id=" + id +
+                ", quizName='" + quizName + '\'' +
+                '}';
+    }
 }

@@ -58,7 +58,9 @@ public class AdminController {
         if (title == null || answerType == null) {
             return "question_add_form";
         }
-        Question question = new Question(title,answerType);
+        Question question = new Question();
+        question.setTitle(title);
+        question.setType(answerType);
         questionService.saveQuestion(question);
         return "success_add_question";
     }
@@ -75,7 +77,10 @@ public class AdminController {
     public String answerProcessForm(Model model,
                                     @RequestParam("answer") String title,
                                     @PathVariable("id") Long questionId){
-        Answer answer = new Answer(title,questionId);
+        Question question = questionService.getOneById(questionId);
+        Answer answer = new Answer();
+        answer.setQuestion(question);
+        answer.setTitle(title);
         answerService.saveAnswer(answer);
         model.addAttribute("questionId",questionId);
         return "success_add_answer";

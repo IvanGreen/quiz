@@ -1,15 +1,17 @@
 package studio.fabrique.quiz.entities;
 
 import lombok.Data;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Data
 @Table(name = "questions")
-public class Question implements Serializable {
+public class Question {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,14 +24,4 @@ public class Question implements Serializable {
     @Column(name = "type")
     private String type;
 
-    @OneToMany(cascade = {CascadeType.ALL}, mappedBy = "question", fetch = FetchType.EAGER)
-    private List<Answer> answers;
-
-    public Question(String title, String type) {
-        this.title = title;
-        this.type = type;
-    }
-
-    public Question() {
-    }
 }
