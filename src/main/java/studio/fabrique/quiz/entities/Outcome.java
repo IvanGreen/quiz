@@ -20,11 +20,7 @@ public class Outcome {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @ManyToMany(cascade = {CascadeType.ALL}, mappedBy = "quiz", fetch = FetchType.EAGER)
+    @OneToMany(cascade = {CascadeType.ALL}, mappedBy = "outcome", fetch = FetchType.EAGER)
     private List<QuestionAnswer> questionAnswers;
-
-    @ManyToOne
-    @JoinColumn(name = "quiz_id")
-    private Quiz quiz;
 
 }

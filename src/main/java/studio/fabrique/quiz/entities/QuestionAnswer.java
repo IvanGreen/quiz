@@ -25,4 +25,8 @@ public class QuestionAnswer {
     @ManyToOne
     @JoinColumn(name = "quiz_id")
     private Quiz quiz;
+
+    @ManyToOne
+    @JoinColumn(name = "outcome_id")
+    private Outcome outcome;
 }

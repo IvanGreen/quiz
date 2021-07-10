@@ -123,15 +123,16 @@ CREATE TABLE `quiz_db`.`question_answer` (
                                    `id` int NOT NULL AUTO_INCREMENT,
                                    `question_id` int DEFAULT NULL,
                                    `answer_id` int DEFAULT NULL,
-                                   `quiz_id` int DEFAULT NULL,
+                                   `outcome_id` int DEFAULT NULL,
                                    PRIMARY KEY (`id`),
                                    KEY `AA_FK_QUESTION_ID_idx` (`question_id`),
                                    KEY `AA_FK_ANSWER_ID_idx` (`answer_id`),
-                                   KEY `AA_FK_QUIZ_ID_idx` (`quiz_id`),
+                                   KEY `AA_FK_OUTCOME_ID_idx` (`outcome_id`),
                                    CONSTRAINT `AA_FK_ANSWER_ID` FOREIGN KEY (`answer_id`) REFERENCES `answers` (`id`),
-                                   CONSTRAINT `AA_FK_QUESTION_ID` FOREIGN KEY (`question_id`) REFERENCES `questions` (`id`),
-                                   CONSTRAINT `AA_FK_QUIZ_ID` FOREIGN KEY (`quiz_id`) REFERENCES `quiz` (`id`)
+                                   CONSTRAINT `AA_FK_OUTCOME_ID` FOREIGN KEY (`outcome_id`) REFERENCES `outcomes` (`id`),
+                                   CONSTRAINT `AA_FK_QUESTION_ID` FOREIGN KEY (`question_id`) REFERENCES `questions` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
 
 
 

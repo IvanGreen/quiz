@@ -88,7 +88,7 @@ public class QuizController {
                                    @RequestParam("question") Long questionId,
                                    @RequestParam("quiz") Long quizId,
                                    HttpSession httpSession) {
-        outcomeMakerService.addToOutcomeMaker(httpSession,answerId,questionId);
+        outcomeMakerService.addToOutcomeMaker(httpSession,answerId,questionId, quizId);
         OutcomeMaker outcomeMaker = outcomeMakerService.getCurrentMaker(httpSession);
         model.addAttribute("outcomeMaker", outcomeMaker);
         model.addAttribute("quizId",quizId);

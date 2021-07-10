@@ -8,12 +8,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import studio.fabrique.quiz.entities.Answer;
+import studio.fabrique.quiz.entities.Outcome;
 import studio.fabrique.quiz.entities.Question;
 import studio.fabrique.quiz.entities.Quiz;
-import studio.fabrique.quiz.services.AnswerService;
-import studio.fabrique.quiz.services.QuestionService;
-import studio.fabrique.quiz.services.QuizMakerService;
-import studio.fabrique.quiz.services.QuizService;
+import studio.fabrique.quiz.services.*;
 import studio.fabrique.quiz.utils.QuizMaker;
 
 import javax.servlet.http.HttpServletRequest;
@@ -36,6 +34,9 @@ public class AdminController {
 
     @Autowired
     private QuizService quizService;
+
+    @Autowired
+    private OutcomeService outcomeService;
 
     @GetMapping("/allQuestions")
     public String showAllQuestions(Model model){

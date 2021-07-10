@@ -16,12 +16,13 @@ public class OutcomeMaker {
         questionAnswers = new ArrayList<>();
     }
 
-    public void add(Answer answer, Question question) {
+    public void add(Answer answer, Question question, Quiz quiz) {
         QuestionAnswer questionAnswer = findQuestionFromAnswer(answer);
         if (questionAnswer == null) {
             questionAnswer = new QuestionAnswer();
             questionAnswer.setAnswer(answer);
             questionAnswer.setQuestion(question);
+            questionAnswer.setQuiz(quiz);
             questionAnswer.setId(0L);
             questionAnswers.add(questionAnswer);
         }
