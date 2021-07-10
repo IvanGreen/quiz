@@ -21,6 +21,9 @@ public class OutcomeMakerService {
     @Autowired
     private QuestionService questionService;
 
+    @Autowired
+    private QuizService quizService;
+
     public OutcomeMaker getCurrentMaker(HttpSession session) {
         OutcomeMaker outcomeMaker = (OutcomeMaker) session.getAttribute("outcomeMaker");
         if (outcomeMaker == null) {
@@ -30,15 +33,15 @@ public class OutcomeMakerService {
         return outcomeMaker;
     }
 
-    public void addToOutcomeMaker(HttpSession session, Long answerId, Long questionId) {
-        OutcomeMaker outcomeMaker = getCurrentMaker(session);
+    public void addToOutcomeMaker(HttpSession session, Long answerId, Long questionId, Long quizId) {
         Answer answer = answerService.getOneById(answerId);
         Question question = questionService.getOneById(questionId);
-        outcomeMaker.add(answer, question);
+        Quiz quiz = quizService.findById(quizId);
+        addToOutcomeMaker(session,answer, question, quiz);
     }
 
-    public void addToOutcomeMaker(HttpSession session, Answer answer, Question question) {
+    public void addToOutcomeMaker(HttpSession session, Answer answer, Question question, Quiz quiz) {
         OutcomeMaker outcomeMaker = getCurrentMaker(session);
-        outcomeMaker.add(answer, question);
+        outcomeMaker.add(answer, question,quiz);
     }
 }

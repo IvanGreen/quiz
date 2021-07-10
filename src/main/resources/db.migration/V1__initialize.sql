@@ -120,22 +120,20 @@ CREATE TABLE `quiz_db`.`quiz_question`
 DROP TABLE IF EXISTS `quiz_db`.`question_answer`;
 
 CREATE TABLE `quiz_db`.`question_answer` (
-                                             `id` INT NOT NULL AUTO_INCREMENT,
-                                             `question_id` INT NOT NULL,
-                                             `answer_id` INT NOT NULL,
-                                             PRIMARY KEY (`id`),
-                                             INDEX `AA_FK_QUESTION_ID_idx` (`question_id` ASC) VISIBLE,
-                                             INDEX `AA_FK_ANSWER_ID_idx` (`answer_id` ASC) VISIBLE,
-                                             CONSTRAINT `AA_FK_QUESTION_ID`
-                                                 FOREIGN KEY (`question_id`)
-                                                     REFERENCES `quiz_db`.`questions` (`id`)
-                                                     ON DELETE NO ACTION
-                                                     ON UPDATE NO ACTION,
-                                             CONSTRAINT `AA_FK_ANSWER_ID`
-                                                 FOREIGN KEY (`answer_id`)
-                                                     REFERENCES `quiz_db`.`answers` (`id`)
-                                                     ON DELETE NO ACTION
-                                                     ON UPDATE NO ACTION);
+                                   `id` int NOT NULL AUTO_INCREMENT,
+                                   `question_id` int DEFAULT NULL,
+                                   `answer_id` int DEFAULT NULL,
+                                   `outcome_id` int DEFAULT NULL,
+                                   PRIMARY KEY (`id`),
+                                   KEY `AA_FK_QUESTION_ID_idx` (`question_id`),
+                                   KEY `AA_FK_ANSWER_ID_idx` (`answer_id`),
+                                   KEY `AA_FK_OUTCOME_ID_idx` (`outcome_id`),
+                                   CONSTRAINT `AA_FK_ANSWER_ID` FOREIGN KEY (`answer_id`) REFERENCES `answers` (`id`),
+                                   CONSTRAINT `AA_FK_OUTCOME_ID` FOREIGN KEY (`outcome_id`) REFERENCES `outcomes` (`id`),
+                                   CONSTRAINT `AA_FK_QUESTION_ID` FOREIGN KEY (`question_id`) REFERENCES `questions` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
 
 
 DROP TABLE IF EXISTS `quiz_db`.`outcomes`;
