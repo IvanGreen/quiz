@@ -138,9 +138,9 @@ CREATE TABLE `quiz_db`.`question_answer` (
                                                      ON UPDATE NO ACTION);
 
 
-DROP TABLE IF EXISTS `quiz_db`.`outcome`;
+DROP TABLE IF EXISTS `quiz_db`.`outcomes`;
 
-CREATE TABLE `quiz_db`.`outcome` (
+CREATE TABLE `quiz_db`.`outcomes` (
                                      `id` INT NOT NULL AUTO_INCREMENT,
                                      `user_id` INT NOT NULL,
                                      `quiz_id` INT NOT NULL,
