@@ -1,12 +1,13 @@
 package studio.fabrique.quiz.entities;
 
 import lombok.Data;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
 
 @Entity
-@Data
 @Table(name = "question_answer")
+@Data
 public class QuestionAnswer {
 
     @Id

@@ -7,12 +7,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import studio.fabrique.quiz.entities.Answer;
 import studio.fabrique.quiz.entities.Question;
 import studio.fabrique.quiz.entities.Quiz;
 import studio.fabrique.quiz.entities.User;
-import studio.fabrique.quiz.entities.UserAnswer;
 import studio.fabrique.quiz.services.*;
+import studio.fabrique.quiz.utils.OutcomeMaker;
 
+import javax.servlet.http.HttpSession;
 import java.security.Principal;
 import java.util.List;
 
@@ -33,51 +35,58 @@ public class QuizController {
     private UserService userService;
 
     @Autowired
-    private UserAnswerService userAnswerService;
+    private OutcomeMakerService outcomeMakerService;
 
     @Autowired
-    private AnsweredUsersService answeredUsersService;
+    private AnswerService answerService;
 
     @GetMapping("/showQuzzes")
-    public String showQuzzes(Model model){
+    public String showQuzzes(Model model, HttpSession session){
         List<Quiz> quizzes = quizService.getAllConfirmedQuiz();
+        OutcomeMaker outcomeMaker = outcomeMakerService.getCurrentMaker(session);
+        model.addAttribute("outcomeMaker", outcomeMaker);
         model.addAttribute("quizzes",quizzes);
         return "quizzes_page";
     }
 
     @GetMapping("/start/{id}")
     public String startQuiz(Model model,
-                            @PathVariable("id") Long id){
-        Quiz quiz = quizService.findById(id);
-        List<Question> questionList = quizQuestionService.getQuestionsByQuizId(id);
-        model.addAttribute("quiz",quiz);
+                            Principal principal,
+                            @PathVariable("id") Long quizId,
+                            HttpSession session){
+        List<Question> questionList = quizQuestionService.getQuestionsByQuizId(quizId);
+        Quiz quiz = quizService.findById(quizId);
+        OutcomeMaker outcomeMaker = outcomeMakerService.getCurrentMaker(session);
         model.addAttribute("questionList",questionList);
+        model.addAttribute("quiz",quiz);
+        model.addAttribute("outcomeMaker",outcomeMaker);
         return "quiz_start";
     }
 
-    @GetMapping("question/answer/{id}")
+    @GetMapping("question/answer/{userChoiceQuestion}/{quizId}")
     public String questionAnswer(Model model,
-                                 @PathVariable("id") Long id) {
-        Question question = questionService.getOneById(id);
-        UserAnswer userAnswer = new UserAnswer();
-        model.addAttribute("userAnswer",userAnswer);
+                                 @PathVariable("userChoiceQuestion") Long userChoiceQuestion,
+                                 @PathVariable("quizId") Long quizId,
+                                 HttpSession session) {
+        Question question = questionService.getOneById(userChoiceQuestion);
+        List<Answer> answers = answerService.getAllAnswersByQuestionId(question.getId());
         model.addAttribute("question",question);
+        model.addAttribute("quizId",quizId);
+        model.addAttribute("answers",answers);
         return "question_answer";
     }
 
-    @GetMapping("/question/answer")
-    public String getSingleAnswer(Model model,
-                                  @RequestParam("answer") Long answerId,
-                                  @RequestParam("question") Long questionId,
-                                  Principal principal) {
-        User user = new User();
-        if (principal != null) {
-            user = userService.findByUserName(principal.getName());
-        } else {
-            user = userService.findByUserName("Incognita");
-        }
-        userAnswerService.add(answerId,questionId);
-        answeredUsersService.add(user.getId(),answerId);
-        return "quiz_start";
+    @GetMapping("question/answer")
+    public String answerToQuestion(Model model,
+                                   @RequestParam("answer") Long answerId,
+                                   @RequestParam("question") Long questionId,
+                                   @RequestParam("quiz") Long quizId,
+                                   HttpSession httpSession) {
+        outcomeMakerService.addToOutcomeMaker(httpSession,answerId,questionId);
+        OutcomeMaker outcomeMaker = outcomeMakerService.getCurrentMaker(httpSession);
+        model.addAttribute("outcomeMaker", outcomeMaker);
+        model.addAttribute("quizId",quizId);
+        return "success_answer";
     }
+
 }

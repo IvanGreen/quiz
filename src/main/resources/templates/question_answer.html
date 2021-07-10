@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8"/>
 
-  <title>Каталог товаров</title>
+  <title th:text="${question.getTitle()}"></title>
 
   <link rel="icon" type="image/png" th:href="@{/static/favicon.ico}"/>
 
@@ -16,29 +16,29 @@
 
 <body>
 
-<div th:replace="~{navigation :: navi(Questions)}"/>
+<div th:replace="~{navigation :: navi(Quizzes)}"/>
 
 <div class="container">
   <br>
   <h1 th:text="'Question: ' + ${question.getTitle()}"/>
-  <form th:action="@{/quiz/question/answer/input}" th:object="${userAnswer}" method="post" class="form-horizontal" >
-  <table class="table table-hover" th:if="${question.getType() == 'input'}">
-    <thead class="thead-dark">
-    <tr>
-      <th>Answer</th>
-      <th>Action</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr>
-      <td />
-      <td><input type="text" th:field="*{userAnswer.answer}" class="form-control input-sm"></td>
-      <td> <button type="submit" class="btn btn-primary">Confirm</button>
-      </td>
-    </tr>
-    </tbody>
-  </table>
-  </form>
+<!--  <form th:action="@{/quiz/question/answer/input}" th:object="${answerFrontSeparator}" method="post" class="form-horizontal" >-->
+<!--  <table class="table table-hover" th:if="${question.getType() == 'input'}">-->
+<!--    <thead class="thead-dark">-->
+<!--    <tr>-->
+<!--      <th>Answer</th>-->
+<!--      <th>Action</th>-->
+<!--    </tr>-->
+<!--    </thead>-->
+<!--    <tbody>-->
+<!--    <tr>-->
+<!--      <td />-->
+<!--      <td><input type="text" th:field="*{userAnswer.answer}" class="form-control input-sm"></td>-->
+<!--      <td> <button type="submit" class="btn btn-primary">Confirm</button>-->
+<!--      </td>-->
+<!--    </tr>-->
+<!--    </tbody>-->
+<!--  </table>-->
+<!--  </form>-->
 
   <table class="table table-hover" th:if="${question.getType() == 'single'}">
     <thead class="thead-dark">
@@ -49,10 +49,10 @@
     </tr>
     </thead>
     <tbody>
-    <tr th:each="answer, itrStat : ${question.getAnswers()}">
+    <tr th:each="answer, itrStat : ${answers}">
       <td th:text="${itrStat.index + 1}"/>
       <td th:text="${answer.getTitle()}"/>
-      <td> <a th:href="@{'/quiz/question/answer?answer=' + ${answer.getId()} + '&question=' + ${question.getId()}}">ANSWER</a>
+      <td> <a th:href="@{'/quiz/question/answer?answer=' + ${answer.getId()} + '&question=' + ${question.getId()}+ '&quiz=' + ${quizId}}">ANSWER</a>
       </td>
     </tr>
     </tbody>

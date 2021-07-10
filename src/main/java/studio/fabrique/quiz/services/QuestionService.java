@@ -5,12 +5,14 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import studio.fabrique.quiz.entities.Question;
 import studio.fabrique.quiz.repositories.QuestionRepository;
 
 import java.util.List;
 
 @Service
+@Transactional
 public class QuestionService {
 
     @Autowired
