@@ -8,7 +8,7 @@ import java.util.List;
 //тут будет финальный ответ
 @Entity
 @Data
-@Table(name = "outcome")
+@Table(name = "outcomes")
 public class Outcome {
 
     @Id
@@ -19,6 +19,9 @@ public class Outcome {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
+
+    @ManyToMany(cascade = {CascadeType.ALL}, mappedBy = "question", fetch = FetchType.EAGER)
+    private List<QuestionAnswer> questionAnswers;
 
     @ManyToOne
     @JoinColumn(name = "quiz_id")

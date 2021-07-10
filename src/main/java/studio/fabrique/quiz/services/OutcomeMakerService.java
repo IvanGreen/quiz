@@ -34,7 +34,7 @@ public class OutcomeMakerService {
         OutcomeMaker outcomeMaker = getCurrentMaker(session);
         Answer answer = answerService.getOneById(answerId);
         Question question = questionService.getOneById(questionId);
-        addToOutcomeMaker(session,answer,question);
+        outcomeMaker.add(answer, question);
     }
 
     public void addToOutcomeMaker(HttpSession session, Answer answer, Question question) {

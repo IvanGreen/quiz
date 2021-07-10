@@ -18,7 +18,7 @@
 
 <div th:replace="~{navigation :: navi(Quizzes)}"/>
 
-<div class="container">
+<div th:if="${questionList.size() > 0}" class="container">
     <br>
     <table class="table table-hover">
         <h1 th:text="'Quiz: ' + ${quiz.getQuizName()}"/>
@@ -38,6 +38,9 @@
         </tr>
         </tbody>
     </table>
+</div>
+<div th:if="${questionList.size() == 0}" class="container">
+
 </div>
 
 </body>

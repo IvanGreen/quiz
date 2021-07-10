@@ -7,10 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import studio.fabrique.quiz.entities.Answer;
-import studio.fabrique.quiz.entities.Question;
-import studio.fabrique.quiz.entities.Quiz;
-import studio.fabrique.quiz.entities.User;
+import studio.fabrique.quiz.entities.*;
 import studio.fabrique.quiz.services.*;
 import studio.fabrique.quiz.utils.OutcomeMaker;
 
@@ -54,9 +51,18 @@ public class QuizController {
                             Principal principal,
                             @PathVariable("id") Long quizId,
                             HttpSession session){
-        List<Question> questionList = quizQuestionService.getQuestionsByQuizId(quizId);
-        Quiz quiz = quizService.findById(quizId);
         OutcomeMaker outcomeMaker = outcomeMakerService.getCurrentMaker(session);
+        List<Question> questionList = quizQuestionService.getQuestionsByQuizId(quizId);
+        if (outcomeMaker.getQuestionAnswers() != null) {
+            for (QuestionAnswer q : outcomeMaker.getQuestionAnswers()) {
+                for (int i = 0; i < questionList.size(); i++) {
+                    if (questionList.get(i).getId().equals(q.getQuestion().getId()) && questionList.size() > 0) {
+                        questionList.remove(questionService.getOneById(q.getQuestion().getId()));
+                    }
+                }
+            }
+        }
+        Quiz quiz = quizService.findById(quizId);
         model.addAttribute("questionList",questionList);
         model.addAttribute("quiz",quiz);
         model.addAttribute("outcomeMaker",outcomeMaker);

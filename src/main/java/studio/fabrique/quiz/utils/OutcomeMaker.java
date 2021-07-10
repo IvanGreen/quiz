@@ -28,7 +28,7 @@ public class OutcomeMaker {
     }
 
     private QuestionAnswer findQuestionFromAnswer(Answer answer) {
-        return questionAnswers.stream().filter(o -> o.getAnswer().getId().equals(answer.getId())).findFirst().orElse(null);
+        return questionAnswers.stream().filter(o -> o.getAnswer().getId().equals(answer)).findFirst().orElse(null);
     }
 
     @Override
