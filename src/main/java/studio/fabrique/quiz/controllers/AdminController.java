@@ -171,7 +171,7 @@ public class AdminController {
 
     //http://localhost:8189/app/admin/showQuzzes
     //displaying the finished quizzes
-    @GetMapping("/showQuzzes")
+    @GetMapping("/showQuizzes")
     public String showQuzzes(Model model){
         List<Quiz> quizzes = quizService.getAllQuiz();
         model.addAttribute("quizzes",quizzes);
