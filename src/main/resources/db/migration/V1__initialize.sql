@@ -1,38 +1,33 @@
-SET
-    FOREIGN_KEY_CHECKS = 0;
+SET FOREIGN_KEY_CHECKS = 0;
 
-DROP DATABASE IF EXISTS `quiz_db`;
+DROP TABLE IF EXISTS `users`;
 
-CREATE DATABASE `quiz_db` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
-
-DROP TABLE IF EXISTS `quiz_db`.`users`;
-
-CREATE TABLE `users`
+CREATE TABLE IF NOT EXISTS `users`
 (
     `id`       int         NOT NULL AUTO_INCREMENT,
     `username` varchar(45) NOT NULL,
     `password` char(80)    NOT NULL,
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB
-  AUTO_INCREMENT = 4
+  AUTO_INCREMENT = 0
   DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_0900_ai_ci;
 
-DROP TABLE IF EXISTS `quiz_db`.`roles`;
+DROP TABLE IF EXISTS `roles`;
 
-CREATE TABLE `roles`
+CREATE TABLE IF NOT EXISTS `roles`
 (
     `id`   int NOT NULL AUTO_INCREMENT,
     `name` varchar(45) DEFAULT NULL,
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB
-  AUTO_INCREMENT = 3
+  AUTO_INCREMENT = 0
   DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_0900_ai_ci;
 
-DROP TABLE IF EXISTS `quiz_db`.`users_roles`;
+DROP TABLE IF EXISTS `users_roles`;
 
-CREATE TABLE `users_roles`
+CREATE TABLE IF NOT EXISTS `users_roles`
 (
     `user_id` int NOT NULL,
     `role_id` int NOT NULL,
@@ -44,34 +39,34 @@ CREATE TABLE `users_roles`
   DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_0900_ai_ci;
 
-DROP TABLE IF EXISTS `quiz_db`.`quiz_statuses`;
+DROP TABLE IF EXISTS `quiz_statuses`;
 
-CREATE TABLE `quiz_statuses`
+CREATE TABLE IF NOT EXISTS `quiz_statuses`
 (
     `id`    int         NOT NULL AUTO_INCREMENT,
     `title` varchar(45) NOT NULL,
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB
-  AUTO_INCREMENT = 3
+  AUTO_INCREMENT = 0
   DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_0900_ai_ci;
 
-DROP TABLE IF EXISTS `quiz_db`.`questions`;
+DROP TABLE IF EXISTS `questions`;
 
-CREATE TABLE `questions`
+CREATE TABLE IF NOT EXISTS `questions`
 (
     `id`    int         NOT NULL AUTO_INCREMENT,
     `title` varchar(45) NOT NULL,
     `type`  varchar(45) NOT NULL,
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB
-  AUTO_INCREMENT = 9
+  AUTO_INCREMENT = 0
   DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_0900_ai_ci;
 
-DROP TABLE IF EXISTS `quiz_db`.`answers`;
+DROP TABLE IF EXISTS `answers`;
 
-CREATE TABLE `answers`
+CREATE TABLE IF NOT EXISTS `answers`
 (
     `id`          int         NOT NULL AUTO_INCREMENT,
     `title`       varchar(45) NOT NULL,
@@ -80,14 +75,14 @@ CREATE TABLE `answers`
     KEY `FK_QUESTION_ID_idx` (`question_id`),
     CONSTRAINT `FK_QUESTION_ID` FOREIGN KEY (`question_id`) REFERENCES `questions` (`id`)
 ) ENGINE = InnoDB
-  AUTO_INCREMENT = 18
+  AUTO_INCREMENT = 0
   DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_0900_ai_ci;
 
 
-DROP TABLE IF EXISTS `quiz_db`.`quiz`;
+DROP TABLE IF EXISTS `quiz`;
 
-CREATE TABLE `quiz`
+CREATE TABLE IF NOT EXISTS `quiz`
 (
     `id`          int         NOT NULL AUTO_INCREMENT,
     `quiz_name`   varchar(45) NOT NULL,
@@ -98,13 +93,13 @@ CREATE TABLE `quiz`
     KEY `FK_QUIZ_STATUS_idx` (`quiz_status`),
     CONSTRAINT `FK_QUIZ_STATUS` FOREIGN KEY (`quiz_status`) REFERENCES `quiz_statuses` (`id`)
 ) ENGINE = InnoDB
-  AUTO_INCREMENT = 7
+  AUTO_INCREMENT = 0
   DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_0900_ai_ci;
 
-DROP TABLE IF EXISTS `quiz_db`.`quiz_question`;
+DROP TABLE IF EXISTS `quiz_question`;
 
-CREATE TABLE `quiz_question`
+CREATE TABLE IF NOT EXISTS `quiz_question`
 (
     `id`          int NOT NULL AUTO_INCREMENT,
     `quantity`    int NOT NULL,
@@ -116,13 +111,25 @@ CREATE TABLE `quiz_question`
     CONSTRAINT `FK_QUESTION_ID_2` FOREIGN KEY (`question_id`) REFERENCES `questions` (`id`),
     CONSTRAINT `FK_QUIZ_ID_2` FOREIGN KEY (`quiz_id`) REFERENCES `quiz` (`id`)
 ) ENGINE = InnoDB
-  AUTO_INCREMENT = 10
+  AUTO_INCREMENT = 0
   DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_0900_ai_ci;
 
-DROP TABLE IF EXISTS `quiz_db`.`question_answer`;
+DROP TABLE IF EXISTS `outcomes`;
 
-CREATE TABLE `question_answer`
+CREATE TABLE IF NOT EXISTS `outcomes`
+(
+    `id`      int NOT NULL AUTO_INCREMENT,
+    `user_id` int NOT NULL,
+    PRIMARY KEY (`id`)
+) ENGINE = InnoDB
+  AUTO_INCREMENT = 0
+  DEFAULT CHARSET = utf8mb4
+  COLLATE = utf8mb4_0900_ai_ci;
+
+DROP TABLE IF EXISTS `question_answer`;
+
+CREATE TABLE IF NOT EXISTS `question_answer`
 (
     `id`          int NOT NULL AUTO_INCREMENT,
     `question_id` int DEFAULT NULL,
@@ -139,18 +146,34 @@ CREATE TABLE `question_answer`
     CONSTRAINT `AA_FK_QUESTION_ID` FOREIGN KEY (`question_id`) REFERENCES `questions` (`id`),
     CONSTRAINT `AA_FK_QUIZ_ID` FOREIGN KEY (`quiz_id`) REFERENCES `quiz` (`id`)
 ) ENGINE = InnoDB
-  AUTO_INCREMENT = 20
+  AUTO_INCREMENT = 0
   DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_0900_ai_ci;
 
-DROP TABLE IF EXISTS `quiz_db`.`outcomes`;
+SET FOREIGN_KEY_CHECKS = 1;
 
-CREATE TABLE `outcomes`
-(
-    `id`      int NOT NULL AUTO_INCREMENT,
-    `user_id` int NOT NULL,
-    PRIMARY KEY (`id`)
-) ENGINE = InnoDB
-  AUTO_INCREMENT = 14
-  DEFAULT CHARSET = utf8mb4
-  COLLATE = utf8mb4_0900_ai_ci;
+INSERT INTO `users` (`username`, `password`)
+VALUES ('admin', '$2a$10$3sLj0tznM4.BYXMQYFwlSuPvDHI0o8xoODuga22st2hDeANn/pvGK');
+INSERT INTO `users` (`username`, `password`)
+VALUES ('user', '$2a$10$3sLj0tznM4.BYXMQYFwlSuPvDHI0o8xoODuga22st2hDeANn/pvGK');
+INSERT INTO `users` (`username`, `password`)
+VALUES ('Incognita', '$2a$10$3sLj0tznM4.BYXMQYFwlSuPvDHI0o8xoODuga22st2hDeANn/pvGK');
+
+
+INSERT INTO `roles` (`name`)
+VALUES ('ROLE_ADMIN');
+INSERT INTO `roles` (`name`)
+VALUES ('ROLE_USER');
+
+INSERT INTO `users_roles` (`user_id`, `role_id`)
+VALUES ('1', '1');
+INSERT INTO `users_roles` (`user_id`, `role_id`)
+VALUES ('2', '2');
+INSERT INTO `users_roles` (`user_id`, `role_id`)
+VALUES ('3', '2');
+
+
+INSERT INTO `quiz_statuses` (`title`)
+VALUES ('Formed');
+INSERT INTO `quiz_statuses` (`title`)
+VALUES ('Submitted');
