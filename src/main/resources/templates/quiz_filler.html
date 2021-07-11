@@ -5,7 +5,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 
-    <title>Оформление заказа</title>
+    <title>Quiz Maker</title>
 
     <link rel="icon" type="image/png" th:href="@{/static/favicon.ico}"/>
 
@@ -27,7 +27,8 @@
     <h1>Quizing :)</h1>
     <br/>
     <form th:action="@{/admin/quiz/confirm}" th:object="${quiz}" method="post" class="form-horizontal">
-        <input type="text" name="quizName" th:placeholder="'Input Quiz Name'">
+        <input th:if="${quizName == null}" type="text" name="quizName" th:placeholder="'Input Quiz Name'">
+        <h2 th:if="${quizName != null}" th:text="${quizName}"></h2>
         <table class="table table-hover">
             <thead class="thead-dark">
             <tr>
@@ -39,9 +40,7 @@
                 <td th:text="${q.question.getTitle()}"/>
             </tr>
             <tr>
-                <td>Total questions:</td>
-                <td/>
-                <td th:text="${quiz.questionList.size()}"/>
+                <td th:text="'Total questions: ' + ${quiz.questionList.size()}"></td>
             </tr>
             </tbody>
         </table>
