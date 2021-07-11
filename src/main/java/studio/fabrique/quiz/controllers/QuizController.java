@@ -101,7 +101,10 @@ public class QuizController {
                                         @RequestParam("questionId") Long questionId,
                                         @RequestParam("quizId") Long quizId,
                                         HttpSession httpSession) {
-        System.out.println("Quiz: " + quizId + " question: " + questionId);
+
+        if (userAnswer.equals("")) {
+            return "redirect:/quiz/question/answer/" + questionId + "/" + quizId;
+        }
         Answer answer = new Answer();
         answer.setQuestion(questionService.getOneById(questionId));
         answer.setTitle(userAnswer);
