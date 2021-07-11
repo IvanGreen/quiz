@@ -2,16 +2,13 @@ package studio.fabrique.quiz.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import studio.fabrique.quiz.entities.Answer;
 import studio.fabrique.quiz.entities.Question;
 import studio.fabrique.quiz.entities.Quiz;
-import studio.fabrique.quiz.entities.User;
 import studio.fabrique.quiz.utils.OutcomeMaker;
 
 import javax.servlet.http.HttpSession;
 
-//корзина для ответов
 @Service
 public class OutcomeMakerService {
 

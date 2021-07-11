@@ -5,7 +5,7 @@ import lombok.Data;
 import javax.persistence.*;
 import java.util.List;
 
-//тут будет финальный ответ
+
 @Entity
 @Data
 @Table(name = "outcomes")

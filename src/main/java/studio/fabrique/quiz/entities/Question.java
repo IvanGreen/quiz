@@ -1,12 +1,8 @@
 package studio.fabrique.quiz.entities;
 
 import lombok.Data;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
-import java.io.Serializable;
-import java.util.List;
-import java.util.Objects;
 
 @Entity
 @Data

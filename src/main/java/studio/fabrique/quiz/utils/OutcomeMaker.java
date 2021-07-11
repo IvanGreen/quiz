@@ -1,13 +1,11 @@
 package studio.fabrique.quiz.utils;
 
 import lombok.Data;
-import org.springframework.security.core.parameters.P;
 import studio.fabrique.quiz.entities.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
-//тут собираем ответы
 @Data
 public class OutcomeMaker {
     private List<QuestionAnswer> questionAnswers;

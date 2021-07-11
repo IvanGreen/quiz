@@ -8,7 +8,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import studio.fabrique.quiz.entities.Answer;
-import studio.fabrique.quiz.entities.Outcome;
 import studio.fabrique.quiz.entities.Question;
 import studio.fabrique.quiz.entities.Quiz;
 import studio.fabrique.quiz.services.*;

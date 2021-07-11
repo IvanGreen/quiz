@@ -12,7 +12,6 @@ import studio.fabrique.quiz.services.*;
 import studio.fabrique.quiz.utils.OutcomeMaker;
 
 import javax.servlet.http.HttpSession;
-import java.security.Principal;
 import java.util.List;
 
 @Controller
