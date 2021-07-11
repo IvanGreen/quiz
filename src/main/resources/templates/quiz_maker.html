@@ -29,6 +29,7 @@
             <tr>
                 <th>№</th>
                 <th>Title</th>
+                <th>Type</th>
                 <th>Action</th>
 
             </tr>
@@ -37,10 +38,10 @@
             <tr th:each="q, itrStat : ${quizMaker.getQuestions()}">
                 <td th:text="${itrStat.index + 1}"/>
                 <td th:text="${q.question.getTitle()}"/>
+                <td th:text="${q.question.getType()}"/>
                 <td><a th:href="@{'/admin/quiz/delete?id=' + ${q.question.getId()}}">DELETE</a></td>
             </tr>
             <tr>
-                <td/><td/><td/>
                 <td>Total Questions:</td>
                 <td th:text="${quizMaker.getQuestions().size()}"/>
             </tr>

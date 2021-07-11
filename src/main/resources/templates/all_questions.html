@@ -36,10 +36,10 @@
       <td th:text="${q.id}"></td>
       <td th:text="${q.title}"></td>
       <td>
-        <a th:href="@{'/admin/quiz/add/' + ${q.id}}">Add to Quiz</a>
+        <a th:if="${q.getAnswers().size() > 0 or q.getType() == 'input'}" th:href="@{'/admin/quiz/add/' + ${q.id}}">Add to Quiz</a>
       </td>
       <td>
-        <a th:href="@{'/admin/add_answer/' + ${q.id}}">ADD ANSWER</a>
+        <a th:if="${q.getType() != 'input'}" th:href="@{'/admin/add_answer/' + ${q.id}}">ADD ANSWER</a>
       </td>
     </tr>
     </tbody>
@@ -49,7 +49,7 @@
     <ul class="pagination">
       <li class="page-item" th:classappend="${page.getNumber() + 1 == i ? 'active' : ''}"
           th:each="i : ${#numbers.sequence(1, page.getTotalPages())}">
-        <a th:class="page-link" th:text="${i}" th:href="@{'showAllProducts?p=' + ${i} + '&'+ ${filtersDef}}"></a>
+        <a th:class="page-link" th:text="${i}" th:href="@{'allQuestions?p=' + ${i} + '&'+ ${filtersDef}}"></a>
       </li>
     </ul>
   </nav>

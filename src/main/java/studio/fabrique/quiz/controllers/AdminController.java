@@ -37,6 +37,7 @@ public class AdminController {
     @Autowired
     private OutcomeService outcomeService;
 
+    //http://localhost:8189/app/admin/allQuestions
     @GetMapping("/allQuestions")
     public String showAllQuestions(Model model){
         int pageIndex = 0;
@@ -47,14 +48,18 @@ public class AdminController {
     }
 
 
+    //http://localhost:8189/app/admin/add_new_question
+    //form for adding a new question
     @GetMapping("/add_new_question")
     public String getQuestionAddForm(Model model) {
         return "question_add_form";
     }
 
+    //adding a new question
     @PostMapping("/question_process_form")
-    public String questionProcessForm(@RequestParam("title") String title,
-                              @RequestParam("answer_type") String answerType) {
+    public String questionProcessForm(Model model,
+                                      @RequestParam("title") String title,
+                                      @RequestParam("answer_type") String answerType) {
         if (title == null || answerType == null) {
             return "question_add_form";
         }
@@ -62,9 +67,12 @@ public class AdminController {
         question.setTitle(title);
         question.setType(answerType);
         questionService.saveQuestion(question);
+        model.addAttribute("question",question);
         return "success_add_question";
     }
 
+    //http://localhost:8189/app/admin/add_answer/{id}
+    //form for adding a new answer
     @GetMapping("/add_answer/{id}")
     public String addAnswer(Model model,
                             @PathVariable("id") Long id){
@@ -73,6 +81,7 @@ public class AdminController {
         return "answer_add_form";
     }
 
+    //adding a new response
     @PostMapping("/add_answer/{id}")
     public String answerProcessForm(Model model,
                                     @RequestParam("answer") String title,
@@ -86,6 +95,8 @@ public class AdminController {
         return "success_add_answer";
     }
 
+    //http://localhost:8189/app/admin/quiz/add/{id}
+    //button for adding a question to Quiz
     @GetMapping("quiz/add/{id}")
     public String addToQuiz(Model model,
                             @PathVariable("id") Long id,
@@ -96,6 +107,8 @@ public class AdminController {
         return "quiz_maker";
     }
 
+    //http://localhost:8189/app/admin/quiz/delete/{id}
+    //deleting a question inside a quiz
     @GetMapping("quiz/delete")
     public String deleteOneQuestion(Model model,
                                     @RequestParam(value = "id") Long id,
@@ -106,6 +119,8 @@ public class AdminController {
         return "quiz_maker";
     }
 
+    //http://localhost:8189/app/admin/quiz/fill
+    //making a quiz of questions
     @GetMapping("quiz/fill")
     public String quizFill(Model model, HttpServletRequest httpServletRequest){
         Quiz quiz = quizService.makeQuiz(quizMakerService.getCurrentMaker(httpServletRequest.getSession()));
@@ -113,18 +128,27 @@ public class AdminController {
         return "quiz_filler";
     }
 
+    //http://localhost:8189/app/admin/quiz/confirm
+    //confirmation of the quiz
     @PostMapping("quiz/confirm")
     public String quizConfirm(Model model,
                               HttpServletRequest httpServletRequest,
                               @ModelAttribute(name = "quiz") Quiz quizFromFrontend,
                               @RequestParam(name = "quizName") String quizName) {
+        //Protection, it is required to name
+        if (quizName.equals("")) {
+            return "redirect:/admin/quiz/fill";
+        }
         Quiz quiz = quizService.makeQuiz(quizMakerService.getCurrentMaker(httpServletRequest.getSession()));
         quiz.setQuizName(quizName);
         quiz = quizService.saveQuiz(quiz);
         model.addAttribute("quiz",quiz);
+        model.addAttribute("quizName",quizName);
         return "quiz_filler";
     }
 
+    //http://localhost:8189/app/admin/quiz/result/{id}
+//confirmation of the quiz
     @GetMapping("quiz/result/{id}")
     public String quizConfirm(Model model, @PathVariable(name = "id") Long id) {
 
@@ -133,6 +157,7 @@ public class AdminController {
         return "quiz_result";
     }
 
+    //http://localhost:8189/app/admin/quiz/ready/{id}
     @GetMapping("quiz/ready/{id}")
     public void quizready(HttpServletRequest httpServletRequest,
                           HttpServletResponse response,
@@ -142,6 +167,8 @@ public class AdminController {
         response.sendRedirect(httpServletRequest.getHeader("referer"));
     }
 
+    //http://localhost:8189/app/admin/showQuzzes
+    //displaying the finished quizzes
     @GetMapping("/showQuzzes")
     public String showQuzzes(Model model){
         List<Quiz> quizzes = quizService.getAllQuiz();
@@ -149,6 +176,8 @@ public class AdminController {
         return "quizzes_page";
     }
 
+    //http://localhost:8189/app/admin/quiz/delete/{id}
+    //deleting the finished quiz
     @GetMapping("/quiz/delete/{id}")
     public void deleteQuiz(HttpServletRequest httpServletRequest,
                            HttpServletResponse response,

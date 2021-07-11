@@ -21,26 +21,16 @@
 <div class="container">
   <br>
   <h1 th:text="'Question: ' + ${question.getTitle()}"/>
-<!--  <form th:action="@{/quiz/question/answer/input}" th:object="${answerFrontSeparator}" method="post" class="form-horizontal" >-->
-<!--  <table class="table table-hover" th:if="${question.getType() == 'input'}">-->
-<!--    <thead class="thead-dark">-->
-<!--    <tr>-->
-<!--      <th>Answer</th>-->
-<!--      <th>Action</th>-->
-<!--    </tr>-->
-<!--    </thead>-->
-<!--    <tbody>-->
-<!--    <tr>-->
-<!--      <td />-->
-<!--      <td><input type="text" th:field="*{userAnswer.answer}" class="form-control input-sm"></td>-->
-<!--      <td> <button type="submit" class="btn btn-primary">Confirm</button>-->
-<!--      </td>-->
-<!--    </tr>-->
-<!--    </tbody>-->
-<!--  </table>-->
-<!--  </form>-->
+  <div th:if="${question.getType() == 'input'}">
+    <form th:action="@{/quiz/question/answer/input}" method="post" class="form-horizontal">
+      <input type="hidden" name="quizId" th:value="${quizId}">
+      <input type="hidden" name="questionId" th:value="${question.getId()}">
+      <input type="text" name="userAnswer" th:placeholder="'Input Your Answer'">
+      <button type="submit" class="btn btn-primary">Ready</button>
+    </form>
+  </div>
 
-  <table class="table table-hover" th:if="${question.getType() == 'single'}">
+  <table class="table table-hover" th:if="${question.getType() != 'input'}">
     <thead class="thead-dark">
     <tr>
       <th>ID</th>

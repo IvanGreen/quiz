@@ -3,6 +3,7 @@ package studio.fabrique.quiz.entities;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Data
@@ -19,5 +20,8 @@ public class Question {
 
     @Column(name = "type")
     private String type;
+
+    @OneToMany(cascade = {CascadeType.ALL}, mappedBy = "question", fetch = FetchType.EAGER)
+    private List<Answer> answers;
 
 }

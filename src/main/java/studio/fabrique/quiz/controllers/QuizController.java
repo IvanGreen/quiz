@@ -3,10 +3,7 @@ package studio.fabrique.quiz.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import studio.fabrique.quiz.entities.*;
 import studio.fabrique.quiz.services.*;
 import studio.fabrique.quiz.utils.OutcomeMaker;
@@ -86,6 +83,24 @@ public class QuizController {
         outcomeMakerService.addToOutcomeMaker(httpSession,answerId,questionId, quizId);
         OutcomeMaker outcomeMaker = outcomeMakerService.getCurrentMaker(httpSession);
         model.addAttribute("outcomeMaker", outcomeMaker);
+        model.addAttribute("quizId",quizId);
+        return "success_answer";
+    }
+
+    @PostMapping("question/answer/input")
+    public String inputAnswerToQuestion(Model model,
+                                        @RequestParam("userAnswer") String userAnswer,
+                                        @RequestParam("questionId") Long questionId,
+                                        @RequestParam("quizId") Long quizId,
+                                        HttpSession httpSession) {
+        System.out.println("Quiz: " + quizId + " question: " + questionId);
+        Answer answer = new Answer();
+        answer.setQuestion(questionService.getOneById(questionId));
+        answer.setTitle(userAnswer);
+        answer = answerService.saveAnswer(answer);
+        outcomeMakerService.addToOutcomeMaker(httpSession,answer.getId(),questionId,quizId);
+        OutcomeMaker outcomeMaker = outcomeMakerService.getCurrentMaker(httpSession);
+        model.addAttribute("outcomeMaker",outcomeMaker);
         model.addAttribute("quizId",quizId);
         return "success_answer";
     }
