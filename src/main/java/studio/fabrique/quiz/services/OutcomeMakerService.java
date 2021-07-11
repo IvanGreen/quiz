@@ -44,4 +44,8 @@ public class OutcomeMakerService {
         OutcomeMaker outcomeMaker = getCurrentMaker(session);
         outcomeMaker.add(answer, question,quiz);
     }
+
+    public void resetCurrentMaker(HttpSession session) {
+        session.removeAttribute("outcomeMaker");
+    }
 }

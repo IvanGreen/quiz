@@ -41,4 +41,16 @@ public class OutcomeService {
         return outcome;
     }
 
+    public List<Outcome> findByUser (User user) {
+        List<Outcome> allOutcome = outcomeRepository.findAll();
+        List<Outcome> outcomes = new ArrayList<>();
+
+        for (Outcome o : allOutcome) {
+            if (o.getUser().equals(user)) {
+                outcomes.add(o);
+            }
+        }
+        return outcomes;
+    }
+
 }

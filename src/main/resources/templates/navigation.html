@@ -35,6 +35,9 @@
         <li class="nav-item" th:classappend="${activeTab == 'Questions' ? 'active' : ''}">
           <a class="nav-link" th:href="@{/admin/allQuestions}">Questions</a>
         </li>
+        <li class="nav-item" th:classappend="${activeTab == 'Answers' ? 'active' : ''}">
+          <a class="nav-link" th:href="@{/outcome/show}">Show Answers</a>
+        </li>
         <li sec:authorize="!isAuthenticated()" class="nav-item" th:classappend="${activeTab == 'Login' ? 'active' : ''}" >
           <a class="nav-link" th:href="@{/login}">Log In</a>
         </li>

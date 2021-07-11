@@ -29,9 +29,6 @@ public class QuizController {
     private QuestionService questionService;
 
     @Autowired
-    private UserService userService;
-
-    @Autowired
     private OutcomeMakerService outcomeMakerService;
 
     @Autowired
@@ -48,7 +45,6 @@ public class QuizController {
 
     @GetMapping("/start/{id}")
     public String startQuiz(Model model,
-                            Principal principal,
                             @PathVariable("id") Long quizId,
                             HttpSession session){
         OutcomeMaker outcomeMaker = outcomeMakerService.getCurrentMaker(session);
