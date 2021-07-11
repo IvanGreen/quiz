@@ -70,8 +70,7 @@ public class QuizController {
     @GetMapping("question/answer/{userChoiceQuestion}/{quizId}")
     public String questionAnswer(Model model,
                                  @PathVariable("userChoiceQuestion") Long userChoiceQuestion,
-                                 @PathVariable("quizId") Long quizId,
-                                 HttpSession session) {
+                                 @PathVariable("quizId") Long quizId) {
         Question question = questionService.getOneById(userChoiceQuestion);
         List<Answer> answers = answerService.getAllAnswersByQuestionId(question.getId());
         model.addAttribute("question",question);
