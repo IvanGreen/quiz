@@ -17,7 +17,7 @@ import studio.fabrique.quiz.repositories.UserRepository;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
-
+//Service for storing and receiving users
 @Service
 public class UserServiceIml implements UserService{
 

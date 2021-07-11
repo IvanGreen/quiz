@@ -11,6 +11,7 @@ import studio.fabrique.quiz.utils.QuizMaker;
 import java.util.ArrayList;
 import java.util.List;
 
+//Quiz storage and search service
 @Service
 public class QuizService {
 

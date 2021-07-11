@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import studio.fabrique.quiz.entities.QuizStatus;
 import studio.fabrique.quiz.repositories.QuizStatusRepository;
 
+//Service for obtaining quiz statuses
 @Service
 public class QuizStatusService {
 

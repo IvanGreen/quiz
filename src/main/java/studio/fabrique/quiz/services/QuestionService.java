@@ -10,6 +10,7 @@ import studio.fabrique.quiz.repositories.QuestionRepository;
 
 import java.util.List;
 
+//Service for storing and searching questions
 @Service
 @Transactional
 public class QuestionService {

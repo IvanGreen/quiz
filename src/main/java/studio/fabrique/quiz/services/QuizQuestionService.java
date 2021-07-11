@@ -9,6 +9,7 @@ import studio.fabrique.quiz.repositories.QuizQuestionRepository;
 import java.util.ArrayList;
 import java.util.List;
 
+//Service for searching questions using quiz
 @Service
 public class QuizQuestionService {
 

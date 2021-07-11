@@ -1,17 +1,17 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
-  <meta charset="utf-8"/>
+    <meta charset="utf-8"/>
 
-  <title th:text="${question.getTitle()}"></title>
+    <title th:text="${question.getTitle()}"></title>
 
-  <link rel="icon" type="image/png" th:href="@{/static/favicon.ico}"/>
+    <link rel="icon" type="image/png" th:href="@{/static/favicon.ico}"/>
 
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
 
-  <meta name="ctx" th:content="${#httpServletRequest.getContextPath()}"/>
+    <meta name="ctx" th:content="${#httpServletRequest.getContextPath()}"/>
 </head>
 
 <body>
@@ -19,34 +19,59 @@
 <div th:replace="~{navigation :: navi(Quizzes)}"/>
 
 <div class="container">
-  <br>
-  <h1 th:text="'Question: ' + ${question.getTitle()}"/>
-  <div th:if="${question.getType() == 'input'}">
-    <form th:action="@{/quiz/question/answer/input}" method="post" class="form-horizontal">
-      <input type="hidden" name="quizId" th:value="${quizId}">
-      <input type="hidden" name="questionId" th:value="${question.getId()}">
-      <input type="text" name="userAnswer" th:placeholder="'Input Your Answer'">
-      <button type="submit" class="btn btn-primary">Ready</button>
-    </form>
-  </div>
+    <br>
+    <h1 th:text="'Question: ' + ${question.getTitle()}"/>
+    <div th:if="${question.getType() == 'input'}">
+        <form th:action="@{/quiz/question/answer/input}" method="post" class="form-horizontal">
+            <input type="hidden" name="quizId" th:value="${quizId}">
+            <input type="hidden" name="questionId" th:value="${question.getId()}">
+            <input type="text" name="userAnswer" th:placeholder="'Input Your Answer'">
+            <button type="submit" class="btn btn-primary">Ready</button>
+        </form>
+    </div>
+    <div>
+        <table class="table table-hover" th:if="${question.getType() == 'multiple'}">
+            <form th:action="@{/quiz/question/answer/multiple}" method="post" class="form-horizontal">
+                <thead class="thead-dark">
+                <tr>
+                    <th>ID</th>
+                    <th>Variant</th>
+                    <th>Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="answer, itrStat : ${answers}">
+                    <td th:text="${itrStat.index + 1}"/>
+                    <td th:text="${answer.getTitle()}"/>
+                    <td><input type="checkbox" name="answerList" th:value="${answer.getId()}">
+                        <input type="hidden" name="quizId" th:value="${quizId}">
+                        <input type="hidden" name="questionId" th:value="${question.getId()}">
+                    </td>
+                </tr>
+                </tbody>
+                <button type="submit" class="btn btn-primary">Confirm</button>
+            </form>
+        </table>
+    </div>
 
-  <table class="table table-hover" th:if="${question.getType() != 'input'}">
-    <thead class="thead-dark">
-    <tr>
-      <th>ID</th>
-      <th>Variant</th>
-      <th>Action</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="answer, itrStat : ${answers}">
-      <td th:text="${itrStat.index + 1}"/>
-      <td th:text="${answer.getTitle()}"/>
-      <td> <a th:href="@{'/quiz/question/answer?answer=' + ${answer.getId()} + '&question=' + ${question.getId()}+ '&quiz=' + ${quizId}}">ANSWER</a>
-      </td>
-    </tr>
-    </tbody>
-  </table>
+    <table class="table table-hover" th:if="${question.getType() == 'single'}">
+        <thead class="thead-dark">
+        <tr>
+            <th>ID</th>
+            <th>Variant</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="answer, itrStat : ${answers}">
+            <td th:text="${itrStat.index + 1}"/>
+            <td th:text="${answer.getTitle()}"/>
+            <td>
+                <a th:href="@{'/quiz/question/answer?answer=' + ${answer.getId()} + '&question=' + ${question.getId()}+ '&quiz=' + ${quizId}}">ANSWER</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
 </div>
 
 </body>
