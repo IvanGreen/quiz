@@ -35,9 +35,6 @@ public class AdminController {
     @Autowired
     private QuizService quizService;
 
-    @Autowired
-    private OutcomeService outcomeService;
-
     //http://localhost:8189/app/admin/allQuestions
     @GetMapping("/allQuestions")
     public String showAllQuestions(Model model,
