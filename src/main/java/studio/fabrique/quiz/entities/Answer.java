@@ -3,7 +3,6 @@ package studio.fabrique.quiz.entities;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.util.Objects;
 
 @Entity
 @Data

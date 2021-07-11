@@ -12,7 +12,6 @@ import studio.fabrique.quiz.services.*;
 import studio.fabrique.quiz.utils.OutcomeMaker;
 
 import javax.servlet.http.HttpSession;
-import java.security.Principal;
 import java.util.List;
 
 @Controller
@@ -27,9 +26,6 @@ public class QuizController {
 
     @Autowired
     private QuestionService questionService;
-
-    @Autowired
-    private UserService userService;
 
     @Autowired
     private OutcomeMakerService outcomeMakerService;
@@ -48,7 +44,6 @@ public class QuizController {
 
     @GetMapping("/start/{id}")
     public String startQuiz(Model model,
-                            Principal principal,
                             @PathVariable("id") Long quizId,
                             HttpSession session){
         OutcomeMaker outcomeMaker = outcomeMakerService.getCurrentMaker(session);

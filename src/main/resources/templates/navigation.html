@@ -27,13 +27,16 @@
           <a class="nav-link" th:href="@{/}">Home<span class="sr-only">(current)</span></a>
         </li>
         <li class="nav-item" sec:authorize="!hasRole('ADMIN')" th:classappend="${activeTab == 'Quizzes' ? 'active' : ''}">
-          <a class="nav-link" sec:authorize="!hasRole('ADMIN')" th:href="@{'/quiz/showQuzzes'}">Quzzes</a>
+          <a class="nav-link" th:href="@{'/quiz/showQuzzes'}">Quzzes</a>
         </li>
         <li class="nav-item" sec:authorize="hasRole('ADMIN')" th:classappend="${activeTab == 'Quizzes' ? 'active' : ''}">
-          <a class="nav-link" sec:authorize="hasRole('ADMIN')" th:href="@{'/admin/showQuzzes'}">Quzzes</a>
+          <a class="nav-link" th:href="@{'/admin/showQuzzes'}">Quzzes</a>
         </li>
         <li class="nav-item" th:classappend="${activeTab == 'Questions' ? 'active' : ''}">
           <a class="nav-link" th:href="@{/admin/allQuestions}">Questions</a>
+        </li>
+        <li class="nav-item" th:classappend="${activeTab == 'Answers' ? 'active' : ''}">
+          <a class="nav-link" th:href="@{/outcome/show}">Show Answers</a>
         </li>
         <li sec:authorize="!isAuthenticated()" class="nav-item" th:classappend="${activeTab == 'Login' ? 'active' : ''}" >
           <a class="nav-link" th:href="@{/login}">Log In</a>
