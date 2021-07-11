@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/admin")
@@ -39,8 +40,12 @@ public class AdminController {
 
     //http://localhost:8189/app/admin/allQuestions
     @GetMapping("/allQuestions")
-    public String showAllQuestions(Model model){
+    public String showAllQuestions(Model model,
+                                   @RequestParam Map<String,String> params){
         int pageIndex = 0;
+        if (params.containsKey("p")) {
+            pageIndex = Integer.parseInt(params.get("p")) - 1;
+        }
         Pageable pageable = PageRequest.of(pageIndex,5);
         Page<Question> page = questionService.findAll(pageable);
         model.addAttribute("page",page);

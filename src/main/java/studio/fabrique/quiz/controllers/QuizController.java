@@ -30,8 +30,10 @@ public class QuizController {
     @Autowired
     private AnswerService answerService;
 
-    @GetMapping("/showQuzzes")
-    public String showQuzzes(Model model, HttpSession session){
+    //http://localhost:8189/app/quiz/showQuzzes
+    //Show All Quizzes
+    @GetMapping("/showQuizzes")
+    public String showQuizzes(Model model, HttpSession session){
         List<Quiz> quizzes = quizService.getAllConfirmedQuiz();
         OutcomeMaker outcomeMaker = outcomeMakerService.getCurrentMaker(session);
         model.addAttribute("outcomeMaker", outcomeMaker);
@@ -39,6 +41,8 @@ public class QuizController {
         return "quizzes_page";
     }
 
+    //http://localhost:8189/app/quiz/start/{id}
+    //Start One Quiz
     @GetMapping("/start/{id}")
     public String startQuiz(Model model,
                             @PathVariable("id") Long quizId,
@@ -61,6 +65,8 @@ public class QuizController {
         return "quiz_start";
     }
 
+    //http://localhost:8189/app/quiz/question/answer/{userChoiceQuestion}/{quizId}
+    //Showing the page with answers to the selected question
     @GetMapping("question/answer/{userChoiceQuestion}/{quizId}")
     public String questionAnswer(Model model,
                                  @PathVariable("userChoiceQuestion") Long userChoiceQuestion,
@@ -74,6 +80,8 @@ public class QuizController {
         return "question_answer";
     }
 
+
+    //Accept an answer to a question type of 'single'
     @GetMapping("question/answer")
     public String answerToQuestion(Model model,
                                    @RequestParam("answer") Long answerId,
@@ -87,6 +95,7 @@ public class QuizController {
         return "success_answer";
     }
 
+    //Accept an answer to a question type of 'input'
     @PostMapping("question/answer/input")
     public String inputAnswerToQuestion(Model model,
                                         @RequestParam("userAnswer") String userAnswer,
@@ -101,6 +110,22 @@ public class QuizController {
         outcomeMakerService.addToOutcomeMaker(httpSession,answer.getId(),questionId,quizId);
         OutcomeMaker outcomeMaker = outcomeMakerService.getCurrentMaker(httpSession);
         model.addAttribute("outcomeMaker",outcomeMaker);
+        model.addAttribute("quizId",quizId);
+        return "success_answer";
+    }
+
+    //Accept an answer to a question type of 'myltiple'
+    @PostMapping("/question/answer/multiple")
+    public String multipleAnswerToQuestion(Model model,
+                                         @RequestParam("answerList") Long[] answerList,
+                                         @RequestParam("questionId") Long questionId,
+                                         @RequestParam("quizId") Long quizId,
+                                         HttpSession httpSession) {
+        for (Long answerId : answerList) {
+            outcomeMakerService.addToOutcomeMaker(httpSession,answerId,questionId,quizId);
+        }
+        OutcomeMaker outcomeMaker = outcomeMakerService.getCurrentMaker(httpSession);
+        model.addAttribute("outcomeMaker", outcomeMaker);
         model.addAttribute("quizId",quizId);
         return "success_answer";
     }

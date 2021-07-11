@@ -9,6 +9,7 @@ import studio.fabrique.quiz.repositories.QuestionAnswerRepository;
 import java.util.ArrayList;
 import java.util.List;
 
+//Service for finding values Question / Answer
 @Service
 public class QuestionAnswerService {
 

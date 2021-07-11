@@ -9,6 +9,7 @@ import studio.fabrique.quiz.utils.OutcomeMaker;
 
 import javax.servlet.http.HttpSession;
 
+//Service for producing and recording user responses
 @Service
 public class OutcomeMakerService {
 

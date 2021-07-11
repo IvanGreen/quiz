@@ -6,6 +6,7 @@ import studio.fabrique.quiz.entities.*;
 import java.util.ArrayList;
 import java.util.List;
 
+//Utility designed to create user responses to quizzes
 @Data
 public class OutcomeMaker {
     private List<QuestionAnswer> questionAnswers;

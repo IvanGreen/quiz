@@ -7,6 +7,7 @@ import studio.fabrique.quiz.entities.QuizQuestion;
 import java.util.ArrayList;
 import java.util.List;
 
+//A utility designed to create quizzes from different questions
 @Data
 public class QuizMaker {
 

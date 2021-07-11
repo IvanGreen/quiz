@@ -27,10 +27,10 @@
           <a class="nav-link" th:href="@{/}">Home<span class="sr-only">(current)</span></a>
         </li>
         <li class="nav-item" sec:authorize="hasRole('USER') or !hasRole('')" th:classappend="${activeTab == 'Quizzes' ? 'active' : ''}">
-          <a class="nav-link" th:href="@{'/quiz/showQuzzes'}">Quzzes</a>
+          <a class="nav-link" th:href="@{'/quiz/showQuizzes'}">Quzzes</a>
         </li>
         <li class="nav-item" sec:authorize="hasRole('ADMIN')" th:classappend="${activeTab == 'Quizzes' ? 'active' : ''}">
-          <a class="nav-link" th:href="@{'/admin/showQuzzes'}">Quzzes</a>
+          <a class="nav-link" th:href="@{'/admin/showQuizzes'}">Quzzes</a>
         </li>
         <li class="nav-item" sec:authorize="hasRole('ADMIN')" th:classappend="${activeTab == 'Questions' ? 'active' : ''}">
           <a class="nav-link" th:href="@{/admin/allQuestions}">Questions</a>

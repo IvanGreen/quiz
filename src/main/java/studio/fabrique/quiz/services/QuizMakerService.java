@@ -7,6 +7,7 @@ import studio.fabrique.quiz.utils.QuizMaker;
 
 import javax.servlet.http.HttpSession;
 
+//Service for creating quizzes from questions
 @Service
 public class QuizMakerService {
 

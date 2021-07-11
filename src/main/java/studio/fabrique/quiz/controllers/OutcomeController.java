@@ -33,6 +33,7 @@ public class OutcomeController {
     @Autowired
     private QuestionAnswerService questionAnswerService;
 
+    //Confirm the final result
     @GetMapping("/confirm")
     public String confirm(Model model,
                           HttpServletRequest httpServletRequest,
@@ -50,6 +51,7 @@ public class OutcomeController {
         return "outcome_result";
     }
 
+    //Showing the final result for a specific user
     @GetMapping("/show")
     public String showOutcome(Model model,
                               Principal principal) {

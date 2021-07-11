@@ -12,6 +12,7 @@ import studio.fabrique.quiz.utils.OutcomeMaker;
 import java.util.ArrayList;
 import java.util.List;
 
+//Service for storing user responses
 @Service
 public class OutcomeService {
 
